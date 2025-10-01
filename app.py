@@ -6,12 +6,27 @@ def load_news(filename):
     """Baca file news_data.csv ke list of dict"""
     # TODO: buka file CSV (filename) dan baca dengan csv.DictReader
     # kembalikan hasilnya dalam bentuk list
-    pass
+    try:
+        text = csv.DictReader(filename.getvalue().decode("utf-8"))
+    except AttributeError:
+        text = csv.DictReader(filename)
+    reader = csv.DictReader(text, delimiter=';')
+    rows = []
+    for row in reader:
+        rows.append({
+            "idBerita": (row.get("idberita") or "").strip(),
+            "Headline": (row.get("Headline") or "").strip(),
+            "Content": (row.get("Content") or "").strip(),
+    })
+    return rows
 
 def load_comments(filename):
     """Baca file comment_news.csv ke list of dict"""
     # TODO: sama seperti load_news tapi untuk file komentar
-    pass
+    try:
+        text = csv.DictReader(filename.getvalue().decode("utf-8"))
+    except AttributeError:
+        text = csv.DictReader(filename)
 
 # --- Fungsi untuk memproses data ---
 def process_data(news_list, comments_list):
